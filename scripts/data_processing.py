@@ -22,5 +22,10 @@ def analyze_sentiment(data, chunk_size=1000):
     for start in tqdm(range(0, len(data), chunk_size)):
         chunk = data.iloc[start:start + chunk_size].copy()
         chunk['sentiment'] = chunk['headline'].apply(get_sentiment)
+        print(f"Processed rows {start} to {start + chunk_size}")
+        print(chunk[['headline', 'sentiment']].head()) 
         chunks.append(chunk)
-    return pd.concat(chunks)
+    
+    combined_data = pd.concat(chunks)
+    print(combined_data.columns)  # Debug: Verify sentiment column exists in the result
+    return combined_data
